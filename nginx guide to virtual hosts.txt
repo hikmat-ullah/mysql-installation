@@ -1,0 +1,44 @@
+How to install nginx & configure multiple virtual hosts using centos 7
+To begin, first install nginx using the following command
+# yum install nginx
+# systemctl start nginx //if you face any issue, try to stop apache because nginx and apache both run on port 80
+# systemctl enable nginx // you don't have to start nginx whenever you bootup your machine
+firewall-cmd --add-service=http --permanent
+firewall-cmd --reload
+To create virtual hosts, create a file in the /etc/nginx/conf.d directory. To create a file run the following command
+and paste in the following content
+
+vi /etc/nginx/conf.d/vhost.host.conf
+# create new
+server {
+    listen       80;
+    server_name  www.virtual.host;
+
+    location / {
+        root   /usr/share/nginx/virtual.host;
+        index  index.html;
+    }
+}
+Now make a directory and then create a file named index.html and paste in the following content
+
+mkdir /usr/share/nginx/vhost.host
+vi /usr/share/nginx/vhost.host/index.html
+
+<html>
+<body>
+<div style="width: 100%; font-size: 40px; font-weight: bold; text-align: center;">
+Nginx Virtual Host Test Page
+</div>
+</body>
+</html>
+
+# systemctl reload nginx
+
+Now type your IP in the browser in the following format 
+192.168.174.156:80/index.html
+and you will see your new virtual host
+
+
+
+
+
